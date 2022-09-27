@@ -1,0 +1,81 @@
+version: "3.7"
+services:
+    app:
+        build:
+            context: ./docker
+            dockerfile: Dockerfile
+        image: streamlabs
+        container_name: streamlabs-application
+        restart: always
+        working_dir: /var/www/
+        volumes:
+            - ./:/var/www
+        depends_on:
+            - database
+        links:
+            - database
+        networks:
+            - streamlabs-network
+        ports:
+            - '5173:5173'
+
+    nginx:
+        image: nginx:alpine
+        container_name: streamlabs-nginx
+        restart: always
+        ports:
+            - "${NGINX_PORT:-8080}:80"
+            - "443:443"
+        volumes:
+            - ./:/var/www
+            - ./docker/nginx:/etc/nginx/conf.d/
+        networks:
+            - streamlabs-network
+        depends_on:
+            - database
+            - phpmyadmin
+    database:
+        image: mysql:5.7
+        container_name: streamlabs-database
+        restart: always
+        environment:
+            MYSQL_DATABASE: ${DB_DATABASE:-streamlabs}
+            MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-root123}
+            MYSQL_PASSWORD: ${DB_PASSWORD:-root123}
+            MYSQL_USER: ${DB_USERNAME:-streamlabs}
+            SERVICE_TAGS: dev
+            SERVICE_NAME: mysql
+        networks:
+            - streamlabs-network
+        volumes:
+            - ./docker/data/mysql:/var/lib/mysql
+
+    sqlite:
+        image: nouchka/sqlite3:latest
+        container_name: streamlabs-sqlite
+        stdin_open: true
+        tty: true
+        volumes:
+            - ./docker/data/sqlite:/root/db/
+
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        container_name: streamlabs-phpmyadmin
+        restart: unless-stopped
+        tty: true
+        depends_on:
+            - database
+        ports:
+            - "${PMA_PORT:-9090}:80"
+        environment:
+            PMA_HOST: database
+            PMA_PORT: 3306
+            PMA_USER: ${DB_USERNAME:-streamlabs}
+            PMA_PASSWORD: ${DB_PASSWORD:-root123}
+            MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-root123}
+            UPLOAD_LIMIT: 2048M
+        networks:
+            - streamlabs-network
+networks:
+    streamlabs-network:
+        driver: bridge
