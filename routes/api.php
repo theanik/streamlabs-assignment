@@ -22,12 +22,15 @@ Route::group(['prefix' => 'v1'], function () {
     Route::post('login', [AuthController::class, 'login']);
 
     Route::middleware('auth:api')->group(function () {
-        Route::post('/logout', [AuthController::class, 'logout']);
+        Route::post('logout', [AuthController::class, 'logout']);
 
         Route::get('plans', [SubscriptionPlanController::class, 'getPlans']);
         Route::get('plan/{plan}', [SubscriptionPlanController::class, 'getPlan']);
 
         Route::get('braintree-token', [PaymentController::class, 'getToken']);
-        Route::post('/checkout', [PaymentController::class, 'checkout']);
+        Route::post('checkout', [PaymentController::class, 'checkout']);
+
+        Route::get('user-subscription', [SubscriptionController::class, 'getCurrentUserSubscription']);
+        Route::post('cancel-subscription', [SubscriptionController::class, 'cancelCurrentUserSubscription']);
     });
 });
