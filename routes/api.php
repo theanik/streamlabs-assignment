@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\V1\AuthController;
+use App\Http\Controllers\Api\V1\SubscriptionPlanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,5 +21,8 @@ Route::group(['prefix' => 'v1'], function () {
 
     Route::middleware('auth:api')->group(function () {
         Route::post('/logout', [AuthController::class, 'logout']);
+
+        Route::get('plans', [SubscriptionPlanController::class, 'getPlans']);
+        Route::get('plan/{plan}', [SubscriptionPlanController::class, 'getPlan']);
     });
 });
