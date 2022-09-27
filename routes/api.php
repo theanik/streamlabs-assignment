@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\SubscriptionPlanController;
 use App\Http\Controllers\Api\V1\PaymentController;
+use App\Http\Controllers\Api\V1\SubscriptionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,5 +28,6 @@ Route::group(['prefix' => 'v1'], function () {
         Route::get('plan/{plan}', [SubscriptionPlanController::class, 'getPlan']);
 
         Route::get('braintree-token', [PaymentController::class, 'getToken']);
+        Route::post('/checkout', [PaymentController::class, 'checkout']);
     });
 });
