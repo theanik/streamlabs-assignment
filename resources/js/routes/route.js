@@ -6,6 +6,7 @@ Vue.use(VueRouter)
 import Login from '../components/auth/Login.vue';
 import Register from '../components/auth/Register.vue';
 import Dashboard from '../components/pages/Dashboard.vue';
+import Plan from '../components/pages/Plan.vue';
 
 const routes = [
     {
@@ -25,7 +26,15 @@ const routes = [
         meta: {
             requiresAuth: true
         }
-    }
+    },
+    {
+        path: '/plans',
+        component: Plan,
+        name: "Plan",
+        meta: {
+            requiresAuth: true
+        }
+    },
 ];
 
 const router = new VueRouter({
