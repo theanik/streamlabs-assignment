@@ -43,6 +43,7 @@
 <script>
 import Auth from '../../utils/Auth.js'
 import api from "../../utils/api"
+import { eventBus} from "../../app"
 
 export default {
     data() {
@@ -61,6 +62,7 @@ export default {
                     let data = res.data.data
                     Auth.login(data.access_token, data.user)
                     this.$router.push("/")
+                    eventBus.$emit('loginSuccessAction');
                 })
                 .catch((error) => {
                     if (error.response.status === 422) {

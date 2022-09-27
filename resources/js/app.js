@@ -11,6 +11,8 @@ Vue.use(VueAxios, axios);
 import App from './App.vue';
 import router from './routes/route';
 
+export const eventBus = new Vue();
+
 new Vue({
     el: '#app',
     router,

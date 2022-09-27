@@ -24,8 +24,9 @@
 </template>
 
 <script>
-import Auth from './utils/Auth.js';
-import api from "./utils/api";
+import Auth from './utils/Auth.js'
+import api from "./utils/api"
+import { eventBus } from './app'
 
 export default {
     data() {
@@ -34,7 +35,9 @@ export default {
         };
     },
     created() {
-
+        eventBus.$on('loginSuccessAction', () => {
+            this.loggedUser = this.auth.user
+        })
     },
     methods: {
         logout() {
@@ -42,6 +45,7 @@ export default {
                 .then(({data}) => {
                     Auth.logout();
                     this.$router.push('/login')
+                    this.loggedUser = null
                 })
                 .catch((error) => {
 
