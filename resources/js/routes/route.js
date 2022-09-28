@@ -8,6 +8,7 @@ import Register from '../components/auth/Register.vue';
 import Dashboard from '../components/pages/Dashboard.vue';
 import Plan from '../components/pages/Plan.vue';
 import Checkout from "../components/pages/Checkout.vue";
+import Profile from "../components/pages/Profile.vue";
 
 const routes = [
     {
@@ -43,7 +44,15 @@ const routes = [
         meta: {
             requiresAuth: true
         }
-    }
+    },
+    {
+        path: '/profile',
+        component: Profile,
+        name: "Profile",
+        meta: {
+            requiresAuth: true
+        }
+    },
 ];
 
 const router = new VueRouter({
