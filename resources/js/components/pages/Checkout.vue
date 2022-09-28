@@ -103,7 +103,6 @@ export default {
             url = url.replace('#ID#', this.$route.params.id)
             await this.axios.get(url)
                 .then(res => {
-                    console.log(res)
                     this.plan = res.data.data
                 })
                 .catch(err => {
@@ -115,12 +114,6 @@ export default {
                 .then(res => {
                     this.braintree_token = res.data.data.braintree_token
                     localStorage.setItem('braintree_token', res.data.data.braintree_token)
-                })
-        },
-        async paymentProcess(nonce) {
-            await this.axios.post(api.CHECKOUT, {planId: this.plan.id, nonce: nonce})
-                .then(res => {
-                    console.log((res))
                 })
         },
         calculatePeriod(days) {

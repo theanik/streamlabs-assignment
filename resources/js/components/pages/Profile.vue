@@ -56,7 +56,7 @@ export default {
                     this.user = res.data.data
                 })
                 .catch(err => {
-                    console.log(err)
+
                 })
         },
         getLeftDays(date) {
