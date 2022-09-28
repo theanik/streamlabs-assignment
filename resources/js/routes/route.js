@@ -7,6 +7,7 @@ import Login from '../components/auth/Login.vue';
 import Register from '../components/auth/Register.vue';
 import Dashboard from '../components/pages/Dashboard.vue';
 import Plan from '../components/pages/Plan.vue';
+import Checkout from "../components/pages/Checkout.vue";
 
 const routes = [
     {
@@ -35,6 +36,14 @@ const routes = [
             requiresAuth: true
         }
     },
+    {
+        path: '/checkout/:id',
+        component: Checkout,
+        name: "Checkout",
+        meta: {
+            requiresAuth: true
+        }
+    }
 ];
 
 const router = new VueRouter({
@@ -47,7 +56,6 @@ router.beforeEach((to, from, next) => {
         console.log(Auth.check())
         if (Auth.check()) {
             next()
-            return
         } else {
             router.push('/login')
         }
