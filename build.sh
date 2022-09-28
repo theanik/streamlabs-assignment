@@ -18,7 +18,7 @@ docker exec streamlabs-application npm install
 docker exec streamlabs-application npm audit fix
 docker exec streamlabs-application npm run dev
 # run required
-docker exec streamlabs-application php artisan migrate --seed
+docker exec streamlabs-application php artisan migrate:fresh --seed
 docker exec streamlabs-application php artisan passport:install
 
 # run unit test

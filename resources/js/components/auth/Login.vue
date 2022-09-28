@@ -20,8 +20,8 @@
                                     <input type="password" class="form-control" id="exampleInputPassword1"
                                            v-model="user.password">
                                 </div>
-                                <div v-for="error in errors" v-if="errors.length">
-                                    <li>{{ error[0] }}</li>
+                                <div v-for="error in errors">
+                                    <li class="text-danger">{{ error[0] }}</li>
                                 </div>
                                 <button type="submit" class="btn btn-primary btn-block mb-2 w-100">Sign in</button>
 
@@ -67,6 +67,12 @@ export default {
                 .catch((error) => {
                     if (error.response.status === 422) {
                         this.errors = error.response.data.errors || {}
+                    }
+                    if (error.response.status === 401) {
+                        this.errors = []
+                        this.errors = {
+                            errorMessage : [error.response.data.message]
+                        }
                     }
                 })
         }
