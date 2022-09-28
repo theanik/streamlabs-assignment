@@ -14,3 +14,5 @@ yarn-error.log
 /.idea
 /.vscode
 /docker/data/*
+/public/css/app.css
+/public/js/app.js
